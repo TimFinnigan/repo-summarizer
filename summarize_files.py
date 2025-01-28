@@ -28,7 +28,7 @@ def summarize_files_in_directory(directory, ignore_dirs=None, ignore_extensions=
     if ignore_dirs is None:
         ignore_dirs = ["node_modules", "__pycache__", "myenv"]
     if ignore_extensions is None:
-        ignore_extensions = [".png", ".jpg", ".exe", ".dll"]
+        ignore_extensions = [".png", ".jpg", ".exe", ".dll", ".json"]
 
     file_summaries = []
 

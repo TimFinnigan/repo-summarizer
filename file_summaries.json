@@ -1,18 +1,18 @@
 [
     {
         "file": "./summarize_files.py",
-        "summary": "This is a Python script that uses the OpenAI API to generate summaries of text files in a given directory. After importing necessary modules, it fetches the OpenAI API key from environment variables, then defines a method to instruct the API to create summaries of a given text. Another function is defined to walk through the directory, skipping specified file types and directories, and creating summaries for each file. For every file, it reads the content, summarizes the first 3000 characters, and saves the result in a list of summaries. If an error occurs during summarizing a file, it is reported. Lastly, if the script is running as the main program, it prompts the user for a directory, then summarizes the files in the directory, and finally saves the summaries in a JSON file inside the provided directory. The script handles errors during the process and provides feedback to the user."
+        "summary": "This script uses OpenAI's GPT-4 model to summarize text files in a specified directory. It prompts the user to input the director path and then it ignores specific files and directories such as hidden ones and those specified in \"ignore_dirs\" and \"ignore_extensions\". The summarize_text function uses OpenAI's API to get a concise summary of each text file's content. The program then saves all the summaries in a JSON file in the given directory. If the OpenAI_API_KEY isn't set in the environment variables, the script will produce an error message and exit."
+    },
+    {
+        "file": "./README.md",
+        "summary": "This project offers two primary tools: File Tree Generator and File Summarizer. The File Tree Generator scans and visualizes a directory's structure, ignoring hidden files or user-specified directories, and copies the file tree to the clipboard. The File Summarizer uses the OpenAI API to generate summaries of files in a directory, ignoring hidden files, specific directories, and unsupported file types, and saves the summaries to a JSON file, also copying them to the clipboard. The project structure includes `utils.py` for shared utilities, `get_file_tree.py` for generating the file tree, and `summarize_files.py` for generating file summaries. The setup requires Python 3.7+, specific Python packages, and a `.env` file with the OpenAI API key."
     },
     {
         "file": "./utils.py",
-        "summary": "The script defines a function, `copy_to_clipboard`, which copies a given text to clipboard. The function's behavior depends on the detected operating system: the 'clip' command is used for Windows, 'pbcopy' for macOS, and 'xclip' for Linux. If the operating system doesn't support these commands or they aren't available, appropriate error messages are printed."
-    },
-    {
-        "file": "./file_summaries.json",
-        "summary": "The script 'summarize_files.py' contains functions to copy text to clipboard, generate summaries of text using the OpenAI API and iterate over a directory to summarize the content of each file. It also manages exceptions and logs errors. The 'get_file_tree.py' script has functionalities to copy strings to the clipboard, generate a list describing the structure of a given directory while ignoring specific directories. It handles permission errors and also prompts the user to provide directories, and generates a file tree."
+        "summary": "This script contains a function named `copy_to_clipboard`, which takes input as text and copies it to the clipboard. It first checks the platform of the system and uses appropriate commands for different operating systems: 'clip' for Windows, 'pbcopy' for macOS, and 'xclip' for Linux. If the operating system doesn't support clipboard copy or the clipboard utility isn't installed, it prints an error message."
     },
     {
         "file": "./get_file_tree.py",
-        "summary": "The file contains a Python script that generates a visual tree of a specified directory's file and folder structure, which can also ignore specific directories. The generated tree is then printed and also copied to the clipboard. The script handles errors like missing directory or denied permissions. It prompts the user to input the directory path and the directories to ignore. If no specific directories to ignore are inputted, it defaults to ignoring \"node_modules\", \"myenv\", \".git\", \"__pycache__\"."
+        "summary": "The provided script generates a file tree of a specified directory. It allows users to ignore certain directories. It handles exceptions for permission errors and missing directories. The file tree output is then printed and copied to the user's clipboard. Input is taken from the user for the directory's path and the directories to ignore. If the user doesn't provide any directory to ignore, it defaults to ignoring \"node_modules\", \"myenv\", \".git\", and \"__pycache__\"."
     }
 ]
