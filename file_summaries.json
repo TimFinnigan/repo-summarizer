@@ -1,0 +1,10 @@
+[
+    {
+        "file": "./summarize_files.py",
+        "summary": "The script imports necessary modules, loads OpenAI API key from environment variables, and defines several functions. The `copy_to_clipboard(text)` function copies text to the system clipboard based on the operating system in use. `summarize_text(client, text)` sends a request to OpenAI API to generate a summary of provided text. `summarize_files_in_directory(directory, ignore_dirs=None, ignore_extensions=None)` iterates over files in the specified directory, ignoring those in specific directories or with certain extensions, and summarizes each file's content using the OpenAI API. The summaries are stored in the `file_summaries` list. Any errors during processing are handled and logged."
+    },
+    {
+        "file": "./get_file_tree.py",
+        "summary": "This script does two main things. First, it contains a function called `copy_to_clipboard` that takes a string input and copies it to the clipboard, using the appropriate command based on the OS type. If the required clipboard utility is not found or not supported, it gives a helpful error message.\n\nSecond, it contains a function called `generate_file_tree` which recursively scans a given directory and returns a list describing the file tree structure, ignoring specified directories. This process handles permission errors and non-existent directories gracefully.\n\nIn the main part of the script, it prompts the user to provide a directory and directories to ignore, generates a file tree for that directory, prints it, copies it to the clipboard and notifies the user about it."
+    }
+]
