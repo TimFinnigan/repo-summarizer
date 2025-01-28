@@ -1,10 +1,18 @@
 [
     {
         "file": "./summarize_files.py",
-        "summary": "The script imports necessary modules, loads OpenAI API key from environment variables, and defines several functions. The `copy_to_clipboard(text)` function copies text to the system clipboard based on the operating system in use. `summarize_text(client, text)` sends a request to OpenAI API to generate a summary of provided text. `summarize_files_in_directory(directory, ignore_dirs=None, ignore_extensions=None)` iterates over files in the specified directory, ignoring those in specific directories or with certain extensions, and summarizes each file's content using the OpenAI API. The summaries are stored in the `file_summaries` list. Any errors during processing are handled and logged."
+        "summary": "This is a Python script that uses the OpenAI API to generate summaries of text files in a given directory. After importing necessary modules, it fetches the OpenAI API key from environment variables, then defines a method to instruct the API to create summaries of a given text. Another function is defined to walk through the directory, skipping specified file types and directories, and creating summaries for each file. For every file, it reads the content, summarizes the first 3000 characters, and saves the result in a list of summaries. If an error occurs during summarizing a file, it is reported. Lastly, if the script is running as the main program, it prompts the user for a directory, then summarizes the files in the directory, and finally saves the summaries in a JSON file inside the provided directory. The script handles errors during the process and provides feedback to the user."
+    },
+    {
+        "file": "./utils.py",
+        "summary": "The script defines a function, `copy_to_clipboard`, which copies a given text to clipboard. The function's behavior depends on the detected operating system: the 'clip' command is used for Windows, 'pbcopy' for macOS, and 'xclip' for Linux. If the operating system doesn't support these commands or they aren't available, appropriate error messages are printed."
+    },
+    {
+        "file": "./file_summaries.json",
+        "summary": "The script 'summarize_files.py' contains functions to copy text to clipboard, generate summaries of text using the OpenAI API and iterate over a directory to summarize the content of each file. It also manages exceptions and logs errors. The 'get_file_tree.py' script has functionalities to copy strings to the clipboard, generate a list describing the structure of a given directory while ignoring specific directories. It handles permission errors and also prompts the user to provide directories, and generates a file tree."
     },
     {
         "file": "./get_file_tree.py",
-        "summary": "This script does two main things. First, it contains a function called `copy_to_clipboard` that takes a string input and copies it to the clipboard, using the appropriate command based on the OS type. If the required clipboard utility is not found or not supported, it gives a helpful error message.\n\nSecond, it contains a function called `generate_file_tree` which recursively scans a given directory and returns a list describing the file tree structure, ignoring specified directories. This process handles permission errors and non-existent directories gracefully.\n\nIn the main part of the script, it prompts the user to provide a directory and directories to ignore, generates a file tree for that directory, prints it, copies it to the clipboard and notifies the user about it."
+        "summary": "The file contains a Python script that generates a visual tree of a specified directory's file and folder structure, which can also ignore specific directories. The generated tree is then printed and also copied to the clipboard. The script handles errors like missing directory or denied permissions. It prompts the user to input the directory path and the directories to ignore. If no specific directories to ignore are inputted, it defaults to ignoring \"node_modules\", \"myenv\", \".git\", \"__pycache__\"."
     }
 ]

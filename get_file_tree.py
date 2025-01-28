@@ -1,22 +1,5 @@
 import os
-import subprocess
-import platform
-
-def copy_to_clipboard(text):
-    system = platform.system()
-    try:
-        if system == "Windows":
-            process = subprocess.Popen(['clip'], stdin=subprocess.PIPE, text=True)
-        elif system == "Darwin":  # macOS
-            process = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True)
-        elif system == "Linux":
-            process = subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=subprocess.PIPE, text=True)
-        else:
-            print("Clipboard copy not supported on this OS.")
-            return
-        process.communicate(input=text)
-    except FileNotFoundError:
-        print("Clipboard utility not found. Install 'xclip' on Linux or ensure clipboard commands are available.")
+from utils import copy_to_clipboard  # Import the shared function
 
 def generate_file_tree(directory, prefix="", ignore_dirs=None, file_tree_list=None):
     if ignore_dirs is None:
@@ -54,7 +37,7 @@ if __name__ == "__main__":
     ignored_input = input(
         "Enter directories to ignore (comma-separated, e.g., node_modules,.git), or press Enter to use defaults: "
     ).strip()
-    ignore_dirs = ignored_input.split(",") if ignored_input else ["node_modules", ".git", "__pycache__"]
+    ignore_dirs = ignored_input.split(",") if ignored_input else ["node_modules", "myenv", ".git", "__pycache__"]
 
     print(f"\nGenerating file tree for: {os.path.abspath(directory)}\n")
     file_tree_output = generate_file_tree(directory, ignore_dirs=ignore_dirs)

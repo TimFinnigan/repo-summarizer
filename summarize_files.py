@@ -1,9 +1,8 @@
 import os
 import json
-import platform
-import subprocess
 from openai import OpenAI
 from dotenv import load_dotenv
+from utils import copy_to_clipboard  # Import the shared function
 
 # Load environment variables
 load_dotenv()
@@ -12,23 +11,6 @@ if not api_key:
     print("Error: OPENAI_API_KEY is not set. Please configure it in the .env file.")
     exit(1)
 client = OpenAI(api_key=api_key)
-
-# Function to copy text to clipboard based on the operating system
-def copy_to_clipboard(text):
-    system = platform.system()
-    try:
-        if system == "Windows":
-            process = subprocess.Popen(['clip'], stdin=subprocess.PIPE, text=True)
-        elif system == "Darwin":  # macOS
-            process = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True)
-        elif system == "Linux":
-            process = subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=subprocess.PIPE, text=True)
-        else:
-            print("Clipboard copy not supported on this OS.")
-            return
-        process.communicate(input=text)
-    except FileNotFoundError:
-        print("Clipboard utility not found. Install 'xclip' on Linux or ensure clipboard commands are available.")
 
 # Function to summarize text using OpenAI API
 def summarize_text(client, text):
