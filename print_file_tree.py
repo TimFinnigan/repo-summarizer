@@ -17,6 +17,9 @@ def print_file_tree(directory, prefix="", ignore_dirs=None):
     except PermissionError:
         print(f"{prefix}[Permission Denied]: {directory}")
         return
+    except FileNotFoundError:
+        print(f"Error: The directory '{directory}' does not exist.")
+        return
 
     entries = [entry for entry in entries if entry not in ignore_dirs]  # Filter ignored directories
 
@@ -36,10 +39,16 @@ def print_file_tree(directory, prefix="", ignore_dirs=None):
             print_file_tree(full_path, new_prefix, ignore_dirs)
 
 if __name__ == "__main__":
-    # Change this to the directory you want to print the file tree for
-    root_directory = "."
-    # Add directories to ignore here
-    ignore_list = ["node_modules", ".git", "__pycache__"]
+    # Prompt user for directory
+    directory = input("Enter the path of the directory you want to scan: ").strip()
 
-    print(f"File Tree for: {os.path.abspath(root_directory)}")
-    print_file_tree(root_directory, ignore_dirs=ignore_list)
+    # Prompt user for ignored directories
+    ignored_input = input(
+        "Enter directories to ignore (comma-separated, e.g., node_modules,.git), or press Enter to use defaults: "
+    ).strip()
+    ignore_dirs = (
+        ignored_input.split(",") if ignored_input else ["node_modules", ".git", "__pycache__"]
+    )
+
+    print(f"\nFile Tree for: {os.path.abspath(directory)}\n")
+    print_file_tree(directory, ignore_dirs=ignore_dirs)
