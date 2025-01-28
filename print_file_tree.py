@@ -1,54 +1,67 @@
 import os
+import subprocess
+import platform
 
-def print_file_tree(directory, prefix="", ignore_dirs=None):
-    """
-    Recursively prints the file tree for the specified directory, with an option to ignore certain directories.
+def copy_to_clipboard(text):
+    system = platform.system()
+    try:
+        if system == "Windows":
+            process = subprocess.Popen(['clip'], stdin=subprocess.PIPE, text=True)
+        elif system == "Darwin":  # macOS
+            process = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, text=True)
+        elif system == "Linux":
+            process = subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=subprocess.PIPE, text=True)
+        else:
+            print("Clipboard copy not supported on this OS.")
+            return
+        process.communicate(input=text)
+    except FileNotFoundError:
+        print("Clipboard utility not found. Install 'xclip' on Linux or ensure clipboard commands are available.")
 
-    :param directory: The root directory to start the file tree from.
-    :param prefix: The prefix used for tree structure representation.
-    :param ignore_dirs: A list of directory names to ignore.
-    """
+def generate_file_tree(directory, prefix="", ignore_dirs=None, file_tree_list=None):
     if ignore_dirs is None:
         ignore_dirs = []
 
+    if file_tree_list is None:
+        file_tree_list = []
+
     try:
-        # List all files and directories in the current directory
         entries = os.listdir(directory)
     except PermissionError:
-        print(f"{prefix}[Permission Denied]: {directory}")
-        return
+        file_tree_list.append(f"{prefix}[Permission Denied]: {directory}")
+        return file_tree_list
     except FileNotFoundError:
-        print(f"Error: The directory '{directory}' does not exist.")
-        return
+        file_tree_list.append(f"Error: The directory '{directory}' does not exist.")
+        return file_tree_list
 
-    entries = [entry for entry in entries if entry not in ignore_dirs]  # Filter ignored directories
+    entries = [entry for entry in entries if entry not in ignore_dirs]
 
     for index, entry in enumerate(entries):
-        # Create full path for the entry
         full_path = os.path.join(directory, entry)
-        # Check if the current entry is the last in the directory
         is_last = index == len(entries) - 1
-
-        # Print the current entry
         connector = "└── " if is_last else "├── "
-        print(f"{prefix}{connector}{entry}")
+        file_tree_list.append(f"{prefix}{connector}{entry}")
 
-        # If it's a directory and not ignored, recurse into it
         if os.path.isdir(full_path):
             new_prefix = prefix + ("    " if is_last else "│   ")
-            print_file_tree(full_path, new_prefix, ignore_dirs)
+            generate_file_tree(full_path, new_prefix, ignore_dirs, file_tree_list)
+
+    return file_tree_list
+
 
 if __name__ == "__main__":
-    # Prompt user for directory
     directory = input("Enter the path of the directory you want to scan: ").strip()
-
-    # Prompt user for ignored directories
     ignored_input = input(
         "Enter directories to ignore (comma-separated, e.g., node_modules,.git), or press Enter to use defaults: "
     ).strip()
-    ignore_dirs = (
-        ignored_input.split(",") if ignored_input else ["node_modules", ".git", "__pycache__"]
-    )
+    ignore_dirs = ignored_input.split(",") if ignored_input else ["node_modules", ".git", "__pycache__"]
 
-    print(f"\nFile Tree for: {os.path.abspath(directory)}\n")
-    print_file_tree(directory, ignore_dirs=ignore_dirs)
+    print(f"\nGenerating file tree for: {os.path.abspath(directory)}\n")
+    file_tree_output = generate_file_tree(directory, ignore_dirs=ignore_dirs)
+
+    file_tree_text = "\n".join(file_tree_output)
+    print(file_tree_text)
+
+    # Copy to clipboard
+    copy_to_clipboard(file_tree_text)
+    print("\nFile tree has been copied to your clipboard!")
