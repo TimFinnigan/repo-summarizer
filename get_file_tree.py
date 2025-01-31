@@ -37,7 +37,7 @@ if __name__ == "__main__":
     ignored_input = input(
         "Enter directories to ignore (comma-separated, e.g., node_modules,.git), or press Enter to use defaults: "
     ).strip()
-    ignore_dirs = ignored_input.split(",") if ignored_input else ["node_modules", "myenv", ".git", "__pycache__"]
+    ignore_dirs = ignored_input.split(",") if ignored_input else ["node_modules", "myenv", ".git", "__pycache__", "dist"]
 
     print(f"\nGenerating file tree for: {os.path.abspath(directory)}\n")
     file_tree_output = generate_file_tree(directory, ignore_dirs=ignore_dirs)

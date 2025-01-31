@@ -26,7 +26,7 @@ def summarize_text(client, text):
 # Function to process files in a directory
 def summarize_files_in_directory(directory, ignore_dirs=None, ignore_extensions=None):
     if ignore_dirs is None:
-        ignore_dirs = ["node_modules", "__pycache__", "myenv"]
+        ignore_dirs = ["node_modules", "__pycache__", "myenv", "dist"]
     if ignore_extensions is None:
         ignore_extensions = [".png", ".jpg", ".exe", ".dll", ".json"]
 
