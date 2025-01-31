@@ -1,0 +1,3 @@
+- Add shared list of extensions to ignore, so can be customized across files
+- Add ability to run entire app via CLI or UI
+- Add ability to summarize all files as a whole (those read by read_files.py) rather than file by file.
