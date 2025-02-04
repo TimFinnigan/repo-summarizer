@@ -8,7 +8,7 @@ load_dotenv()
 
 # Default ignore settings
 IGNORE_DIRS = ["node_modules", "__pycache__", "myenv", "dist"]
-IGNORE_EXTENSIONS = [".png", ".jpg", ".exe", ".dll", ".json"]
+IGNORE_EXTENSIONS = [".png", ".jpg", ".exe", ".dll", ".json", ".md"]
 
 def read_files_in_directory(directory, ignore_dirs=None, ignore_extensions=None):
     """Reads all files in a directory while ignoring specified directories and extensions."""
